@@ -105,8 +105,7 @@ export default class SceneBass extends Scene {
 
     flipBassA() {
         this.bassAFlip = !this.bassAFlip;
-        videoBassA.stop()
-        videoBassA.loop()
-        videoBassA.speed(1.5)
+        videoBassA.play()
+        // videoBassA.time(0.0)
     }
 }

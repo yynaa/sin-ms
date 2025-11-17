@@ -60,7 +60,7 @@ export default class SceneArp extends Scene {
 
         p.push()
         p.translate(0, 0, -90);
-        p.plane(1920/4, 1080/4);
+        p.plane(p.width/4, p.height/4);
         p.pop()
 
         if (this.arpShow) {

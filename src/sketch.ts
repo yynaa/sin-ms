@@ -13,7 +13,7 @@ import SceneSuperHat from "./scenes/superhat.js";
 
 // -- DEBUG --
 export const DEBUG = false;
-export const START_OFFSET = 90000;
+export const START_OFFSET = 0;
 
 // -- CONSTANTS --
 const VERSION = "1.0.0";
@@ -452,23 +452,24 @@ const sketch = (p: p5.default) => {
         10 - p.width / 2,
         70 - p.height / 2,
       );
+      p.text("/!\\ flashing lights /!\\", 10 - p.width / 2, 90 - p.height / 2);
       p.fill(255, 255, 255, 255);
       p.text(
         "works best on chromium-based browsers",
         10 - p.width / 2,
-        110 - p.height / 2,
+        130 - p.height / 2,
       );
       p.fill(255, 255, 255, 155);
       p.text(
         "turn on hardware acceleration, make sure you're using your discrete gpu",
         10 - p.width / 2,
-        130 - p.height / 2,
+        150 - p.height / 2,
       );
       p.fill(255, 255, 255, 55);
       p.text(
         "interface with your vertices, use your fragments for everything else",
         10 - p.width / 2,
-        150 - p.height / 2,
+        170 - p.height / 2,
       );
       p.fill(234, 118, 203, 255);
       p.text(
@@ -476,12 +477,12 @@ const sketch = (p: p5.default) => {
           ? "Loading..."
           : "Click to start...",
         10 - p.width / 2,
-        190 - p.height / 2,
+        210 - p.height / 2,
       );
       p.text(
         DEBUG ? "DEBUG MODE ENABLED" : "",
         10 - p.width / 2,
-        210 - p.height / 2,
+        230 - p.height / 2,
       );
 
       return;

@@ -44,7 +44,9 @@ void main() {
 
     hsvMain.z = hsvHat.z * (superposerOpacity*0.5) + hsvMain.z * (1. - (superposerOpacity*0.5));
     hsvMain.x = fract(hsvMain.x + (hsvHat.z * superposerOpacity + hsvMain.z * (1. - superposerOpacity)));
-    hsvMain.z = clamp(hsvMain.z, 0.3, 1.0);
+
+    hsvMain.y = clamp(hsvMain.y, hsvMain.z*0.7, 1.0);
+    hsvMain.z = clamp(hsvMain.z, 0.2, 1.0);
 
     gl_FragColor = vec4(hsv2rgb(hsvMain), colorMain.a);
 }

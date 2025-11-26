@@ -28,6 +28,6 @@ void main() {
     vec4 color = texture2D(uTex, texCoord);
     vec3 hsv = rgb2hsv(color.rgb);
     hsv.x -= 0.085;
-    color = vec4(hsv2rgb(hsv)*0.95, color.a);
+    color = vec4(hsv2rgb(hsv), color.a);
     gl_FragColor = color;
 }

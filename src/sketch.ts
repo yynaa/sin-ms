@@ -13,7 +13,7 @@ import SceneSuperHat from "./scenes/superhat.js";
 
 // -- DEBUG --
 export const DEBUG = false;
-export const START_OFFSET = 0;
+export const START_OFFSET = 90000;
 
 // -- CONSTANTS --
 const VERSION = "1.0.0";

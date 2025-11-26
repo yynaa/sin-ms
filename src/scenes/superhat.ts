@@ -1,66 +1,74 @@
-import {Scene} from "../interfaces.js";
+import { Scene } from "../interfaces.js";
 import p5 from "p5";
-import {glslScreenFlip, glslScreenFlipZoom, videoHat} from "../sketch.js";
+import { glslScreenFlip, glslScreenFlipZoom, videoHat } from "../sketch.js";
 
 export default class SceneSuperHat extends Scene {
-    hatFlip: boolean;
-    hatZoom: number;
-    hatBuffer: p5.default.Graphics;
+  hatFlip: boolean;
+  hatZoom: number;
+  hatBuffer: p5.default.Graphics;
 
-    constructor(p: p5.default) {
-        super(p);
-        this.hatFlip = true;
-        this.hatZoom = 1.0;
-        this.hatBuffer = p.createGraphics(p.width, p.height, "p2d")
+  constructor(p: p5.default) {
+    super(p);
+    this.hatFlip = true;
+    this.hatZoom = 1.0;
+    this.hatBuffer = p.createGraphics(p.width, p.height, "p2d");
+  }
+
+  demoStart(p: p5.default) {
+    videoHat.play();
+    this.hatBuffer.image(
+      videoHat,
+      0,
+      0,
+      this.hatBuffer.width,
+      this.hatBuffer.height,
+    );
+  }
+
+  enter(millis: number, p: p5.default) {}
+
+  draw(millis: number, p: p5.default) {
+    if (videoHat.elt.readyState >= videoHat.elt.HAVE_ENOUGH_DATA) {
+      this.hatBuffer.image(
+        videoHat,
+        0,
+        0,
+        this.hatBuffer.width,
+        this.hatBuffer.height,
+      );
     }
 
-    demoStart(p: p5.default) {
-        videoHat.play();
-        this.hatBuffer.image(videoHat, 0, 0, this.hatBuffer.width, this.hatBuffer.height)
-    }
+    this.buffer.begin();
 
-    enter(millis: number, p: p5.default) {
-    }
+    p.ortho();
+    p.camera(0, 0, 350, 0, 0, 0);
 
-    draw(millis: number, p: p5.default) {
-        if (videoHat.elt.readyState >= videoHat.elt.HAVE_ENOUGH_DATA) {
-            this.hatBuffer.image(videoHat, 0, 0, this.hatBuffer.width, this.hatBuffer.height)
-        }
+    p.background(0);
 
-        this.buffer.begin();
+    p.shader(glslScreenFlipZoom);
+    glslScreenFlipZoom.setUniform("uTex", this.hatBuffer);
+    glslScreenFlipZoom.setUniform("flip", this.hatFlip);
+    glslScreenFlipZoom.setUniform("zoom", this.hatZoom);
 
-        p.ortho();
-        p.camera(0, 0, 350, 0, 0, 0);
+    this.hatZoom = p.lerp(this.hatZoom, 1.0, 0.25);
 
-        p.background(0);
+    p.plane(p.width, p.height);
 
-        p.shader(glslScreenFlipZoom)
-        glslScreenFlipZoom.setUniform("uTex", this.hatBuffer);
-        glslScreenFlipZoom.setUniform("flip", this.hatFlip);
-        glslScreenFlipZoom.setUniform("zoom", this.hatZoom);
+    this.buffer.end();
+  }
 
-        this.hatZoom = p.lerp(this.hatZoom, 1.0, 0.05)
+  onTick(tick: number, millis: number, p: p5.default) {}
 
-        p.plane(p.width, p.height);
+  onBeat(beat: number, millis: number, p: p5.default) {}
 
-        this.buffer.end();
-    }
+  onLine(line: number, millis: number, p: p5.default) {
+    this.flipHat();
+  }
 
-    onTick(tick: number, millis: number, p: p5.default) {
-    }
-
-    onBeat(beat: number, millis: number, p: p5.default) {
-    }
-
-    onLine(line: number, millis: number, p: p5.default) {
-        this.flipHat()
-    }
-
-    flipHat() {
-        this.hatFlip = !this.hatFlip;
-        this.hatZoom = 0.8;
-        //videoHat.play();
-        //videoHat.time(0.2);
-    }
-
+  flipHat() {
+    this.hatFlip = !this.hatFlip;
+    this.hatZoom = 0.8;
+    videoHat.play();
+    videoHat.time(0.15);
+  }
 }

@@ -10,6 +10,8 @@ uniform sampler2D uTexHat;
 uniform float scale;
 uniform vec2 offset;
 
+uniform float superposerOpacity;
+
 vec3 rgb2hsv(vec3 c)
 {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -40,7 +42,9 @@ void main() {
     vec3 hsvMain = rgb2hsv(colorMain.rgb);
     vec3 hsvHat = rgb2hsv(colorHat.rgb);
 
-    hsvMain.y = hsvHat.z;
+    hsvMain.z = hsvHat.z * (superposerOpacity*0.5) + hsvMain.z * (1. - (superposerOpacity*0.5));
+    hsvMain.x = fract(hsvMain.x + (hsvHat.z * superposerOpacity + hsvMain.z * (1. - superposerOpacity)));
+    hsvMain.z = clamp(hsvMain.z, 0.3, 1.0);
 
     gl_FragColor = vec4(hsv2rgb(hsvMain), colorMain.a);
 }

@@ -18,11 +18,6 @@
             nodejs
             pkgs.nodePackages.npm
           ];
-
-          shellHook = ''
-            echo "Node.js ${nodejs.version} development environment"
-            echo "npm: $(npm --version)"
-          '';
         };
       });
 }

@@ -27,7 +27,7 @@ let zoomUnlerped = 1.0;
 let superhatOpacityUnlerped = 0.0;
 
 // -- ASSETS --
-let assetsToLoad = 26;
+let assetsToLoad = 27;
 let videosToLetPlay = 11;
 
 let song: p5.default.MediaElement<HTMLAudioElement>;
@@ -250,7 +250,9 @@ const sketch = (p: p5.default) => {
     }
 
     // assets
-    song = p.createAudio("/assets/audio.wav");
+    song = p.createAudio("/assets/audio.wav", () => {
+      assetsToLoad -= 1;
+    });
 
     {
       videoArp = p.createVideo("/assets/arp.mp4", () => {
